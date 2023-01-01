@@ -3,6 +3,7 @@ on:
   workflow_run:
     workflows: 
       - Deploy*
+      - echo
     types: [completed]
 jobs:
   on-requested:

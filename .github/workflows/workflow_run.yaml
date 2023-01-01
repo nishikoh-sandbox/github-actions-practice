@@ -1,0 +1,30 @@
+name: workflow_run
+on:
+  workflow_run:
+    workflows: 
+      - Deploy*
+    types: [completed]
+jobs:
+  on-requested:
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == '' }}
+    steps:
+      - run: echo 'requested'
+  on-success:
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: echo 'success'
+  on-failure:
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'failure'
+  echo-workflow-info:
+    name: echo-workflow-info
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.info(JSON.stringify(context.payload))

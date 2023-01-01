@@ -1,3 +1,4 @@
+name: foo
 run-name: Deploy to ${{ inputs.application }} by @${{ github.actor }}
 
 on:
@@ -10,6 +11,10 @@ on:
           - foo
           - bar
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,3 +25,8 @@ jobs:
       
       - name: echo branch
         run: echo ${{ github.ref_name }}
+      
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.info(JSON.stringify(context.payload))

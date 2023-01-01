@@ -1,7 +1,8 @@
 name: workflow_run
 on:
   workflow_run:
-    workflows: 
+    workflows:
+      - foo 
       - Deploy*
       - Deploy to foo by @Nishikoh
       - e*

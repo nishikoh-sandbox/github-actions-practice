@@ -16,4 +16,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: echo
-        run: echo ${{inputs.application}}
+        run: echo "${{inputs.application}} 2"
+      
+      - name: echo branch
+        run: echo ${{ github.ref_name }}
